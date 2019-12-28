@@ -1,0 +1,30 @@
+export AWS_ACCESS_KEY_ID="xxx"
+export AWS_SECRET_ACCESS_KEY="xxx"
+
+export DB_USERNAME=spring
+export DB_PASSWORD=boot
+
+show databases;
+CREATE DATABASE spotleft;
+GRANT ALL ON spotleft.* TO spring;
+
+export FLYWAY_URL=jdbc:mysql://xxx:3306/spotleft
+export FLYWAY_USERNAME=spring
+export FLYWAY_PASSWORD=boot
+export FLYWAY_LOCATIONS=filesystem:src/main/resources/db/migration
+
+spring:
+  datasource:
+    username: spring
+    password: boot
+
+INSERT INTO instances 
+  (id, name, deployment, require_spot)
+  VALUES
+  (1, 'test', 'test_dep', false)
+;
+INSERT INTO instances 
+  (id, name, deployment, require_spot)
+  VALUES
+  (2, 'test2', 'test_dep2', false)
+;

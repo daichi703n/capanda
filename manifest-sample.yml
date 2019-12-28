@@ -1,0 +1,32 @@
+#Sample manifest.yml for Cloud Foundry
+---
+applications:
+- name: spotleft
+  routes:
+    - route: spotleft.${DOMAIN}
+  instances: 1
+  disk_quota: 256m
+  memory: 1g
+  path: target/spotleft-0.0.1.jar
+  buildpack: java_buildpack_offline
+  health-check-type: http
+  health-check-http-endpoint: /actuator/health
+  services:
+  - spotleft-db
+  - metrics-endpoint-actuator-prometheus
+  env:
+    JAVA_OPTS: -Duser.timezone=Asia/Tokyo -Duser.language=ja -Duser.country=JP
+    AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+    AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+    AWS_REGION: ap-northeast-1
+    ### DATABASE params are passed from DB Service
+    # DATABASE_URL: 
+    # DB_USERNAME:
+    # DB_PASSWORD:
+    SLACK_WEBHOOK_URL: https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    SLACK_USERNAME: Spotleft
+    SLACK_CHANNEL: "#general"
+    SLACK_ICON_EMOJI: ":flashlight:"
+    SPOTLEFT_URL: "https://spotleft.${DOMAIN}"
+    SPOTLEFT_EXCLUDE_NAME: bosh-health
+    # SPOTLEFT_CRON:

@@ -1,0 +1,55 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+spring:
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate.ddl-auto: update
+    show-sql: true
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: ${GITHUB_CLIENT_ID}
+            client-secret: ${GITHUB_CLIENT_SECRET}
+            scope: read:user,public_repo
+          test: #TODO: fix test settings
+            client-id: ${GITHUB_CLIENT_ID}
+            client-secret: ${GITHUB_CLIENT_SECRET}
+            scope: read:user,read_org,public_repo
+            # redirectUriTemplate: '{baseUrl}/login/oauth2/code/{registrationId}'
+            redirectUriTemplate: 'http://localhost:8080/login/oauth2/code/test'
+            authorizationGrantType: authorization_code
+            # scope:
+            #   - openid
+            #   - profile
+            #   - email
+            # clientName: test
+        provider:
+          test: #TODO: fix test settings
+            authorizationUri: "https://github.com/login/oauth/authorize"
+            tokenUri: "https://github.com/login/oauth/access_token"
+            jwkSetUri: "https://example.com"
+            userInfoUri: "https://api.github.com/user"
+            userNameAttribute: test
+
+#TODO: NOT YET IMPLEMENTED
+capanda:
+  slack:
+    webhook_url: ${SLACK_WEBHOOK_URL}
+    channel: ${SLACK_CHANNEL}
+    icon_emoji: ${SLACK_ICON_EMOJI}
+    username: ${SLACK_USERNAME:Capanda}
+
+logging:
+  exception-conversion-word: "\t%replace(%replace(%xEx){'\n','\\\\n'}){'\t','    '}%nopex"
+  pattern:
+    console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSSZ}){faint} %clr(${logging.pattern.level:-%5p}) %clr(${PID:}){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%logger){cyan} %clr(:){faint} %replace(%m){'\n','\\\\n'}${logging.exception-conversion-word:%wEx}%n"
