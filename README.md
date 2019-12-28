@@ -1,4 +1,4 @@
-# Capanda :billed_cap: :panda_face:
+# Capanda :tophat: :panda_face:
 
 WIP
 
