@@ -1,0 +1,15 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Spotleft</title>
+    <div th:replace="fragments/header :: head">Header</div>
+  </head>
+<body>
+  <div th:replace="fragments/header :: header">Header</div>
+  <div th:class="container-fluid">
+    <!-- <h1><i class="fas fa-search-dollar"></i>Spotleft</h1> -->
+    <span th:utext="${msg}" />
+  </div>
+  <div th:replace="fragments/footer :: footer">&copy; Footer</div>
+</body>
+</html>

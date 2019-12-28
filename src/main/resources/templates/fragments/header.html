@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <div th:fragment="head">
+    <!-- <title>Capanda</title> -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />  
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-6470019750016063",
+        enable_page_level_ads: true
+      });
+    </script>
+    <script src="https://kit.fontawesome.com/4869ef1cfb.js"></script>
+  </div>
+</head>
+<body>
+  <div th:fragment="header">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-fixed-top">
+      <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+      <link th:href="@{/webjars/datatables/css/jquery.dataTables.min.css}" rel="stylesheet" />
+      <!-- <link th:href="@{/webjars/datatables/css/dataTables.bootstrap4.min.css}" rel="stylesheet" /> -->
+      <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+      <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+      <script th:src="@{/webjars/datatables/js/jquery.dataTables.min.js}"></script>
+      <script th:src="@{/webjars/datatables/js/dataTables.bootstrap4.min.js}"></script>
+      <script src="/js/capandaTable.js"></script>
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#"><i class="far fa-credit-card"></i>Capanda</a>
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="true" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse" id="navbarNav">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active" th:classappend="${module == 'home' ? 'active' : ''} ">
+              <a class="nav-link" href="#" th:href="@{/}"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <!-- <li class="nav-item active" th:classappend="${module == 'home' ? 'active' : ''} ">
+              <a class="nav-link" href="#" th:href="@{/instances}"><i class="fab fa-aws"></i> AWS Instances</a>
+            </li>
+            <li class="nav-item active" th:classappend="${module == 'home' ? 'active' : ''} ">
+              <a class="nav-link" href="#" th:href="@{/saved}"><i class="fas fa-database"></i> Saved Instances</a>
+            </li> -->
+          </ul>
+          <ul class="navbar-nav">
+              <a class="m-1" href="https://github.com/daichi703n/capanda">
+                <i class="fab fa-github fa-2x" style="color:whitesmoke;"></i>
+              </a>
+            <!-- <li th:if="${#authorization.expression('!isAuthenticated()')}"> -->
+              <a class="btn btn-primary m-1" href="/login" th:href="@{/login}">
+                <i class="fas fa-sign-in-alt"></i> Login
+              </a>
+            <!-- </li> -->
+            <!-- <li th:if="${#authorization.expression('isAuthenticated()')}"> -->
+              <a class="btn btn-danger m-1" href="/logout" th:href="@{#}" onclick="$('#form').submit();">
+                <i class="fas fa-sign-out-alt"></i> Logout
+              </a>
+              <form style="visibility: hidden" id="form" method="post" action="#" th:action="@{/logout}"></form>
+            <!-- </li> -->
+          </ul>
+        </div>
+        <!--/.nav-collapse -->
+      </div>
+    </nav>
+    <!--TODO: Bootstrap4 adjust-->
+    <div class="container mt-2 alert alert-danger" role="alert" th:if="${alert_message != null}"><div th:text="${alert_message}" /></div>
+    <div class="container-fluid alert alert-primary" role="alert" th:if="${notify_message != null}"><div th:text="${notify_message}" /></div>
+  </div>
+</body>
+</html>
