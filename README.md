@@ -11,6 +11,7 @@ WIP
 ## QuickStart
 
 1. WIP - Capture Interface
+1. Mac: `brew install libpcap`
 1. Set Environment Variables on `Configuration`.
 1. Run `mvn spring-boot:run`.
 1. Access to `http://localhost:8080`.
