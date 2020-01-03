@@ -17,15 +17,19 @@ import org.pcap4j.core.Pcaps;
 import org.pcap4j.core.PcapNetworkInterface.PromiscuousMode;
 import org.pcap4j.packet.IpV4Packet;
 import org.pcap4j.packet.Packet;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Service
+// @Service
+@Component
 public class CapandaListnerService {
 
-    @javax.annotation.PostConstruct
+    // @javax.annotation.PostConstruct
+    @Scheduled(fixedDelay = 1000)
     public static void listen()
             throws UnknownHostException, PcapNativeException, EOFException, TimeoutException, NotOpenException {
     log.info("Start Listning.");
