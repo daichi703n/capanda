@@ -1,6 +1,7 @@
 package com.daichi703n.capanda.domain;
 
 import java.io.EOFException;
+import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -9,6 +10,8 @@ import java.util.Objects;
 import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import com.github.seratch.jslack.api.webhook.WebhookResponse;
 
 import org.pcap4j.core.NotOpenException;
 import org.pcap4j.core.PacketListener;
@@ -21,6 +24,7 @@ import org.pcap4j.core.PcapNetworkInterface.PromiscuousMode;
 import org.pcap4j.packet.IpV4Packet;
 import org.pcap4j.packet.Packet;
 import org.pcap4j.packet.TcpPacket;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -32,9 +36,12 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class CapandaListnerService {
 
+    @Autowired
+    private SlackService slackService;
+
     // @javax.annotation.PostConstruct
     @Scheduled(fixedDelay = 1000)
-    public static void listen()
+    public void listen()
             throws UnknownHostException, PcapNativeException, EOFException, TimeoutException, NotOpenException {
         log.info("Start Listning.");
 
@@ -81,6 +88,14 @@ public class CapandaListnerService {
                         String searchedPayload = searchPayload(result);
                         if (searchedPayload != ""){
                             log.info(searchedPayload);
+                            try {
+                                // WebhookResponse res = slackService.hello();
+                                WebhookResponse res = slackService.send(searchedPayload + "<!here>");
+                                System.out.println(res);
+                            } catch (IOException e) {
+                                // Auto-generated catch block
+                                e.printStackTrace();
+                            }
                         }
                     } catch (final NullPointerException e){
                         log.info("No Payload");
