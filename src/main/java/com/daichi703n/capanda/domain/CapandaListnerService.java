@@ -60,7 +60,7 @@ public class CapandaListnerService {
             @Override
             public void gotPacket(final Packet packet) {
             // Override the default gotPacket() function and process packet
-            log.info(handle.getTimestamp().toString());
+            // log.info(handle.getTimestamp().toString());
             if (packet.contains(IpV4Packet.class)){
                 
                 if (packet.contains(TcpPacket.class)){
