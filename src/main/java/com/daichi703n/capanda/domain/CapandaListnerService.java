@@ -119,25 +119,17 @@ public class CapandaListnerService {
     }
 
     private static String flattenPayload(String str){
-      String regex = ".*Hex stream: ";
-      Pattern p = Pattern.compile(regex);
-      Matcher m = p.matcher(str);
-      str = m.replaceAll("");
-
-      regex = "\\[data .*\\n";
-      p = Pattern.compile(regex);
-      m = p.matcher(str);
-      str = m.replaceAll("");
-
-      regex = " ";
-      p = Pattern.compile(regex);
-      m = p.matcher(str);
-      str = m.replaceAll("");
-
-      regex = "\\n";
-      p = Pattern.compile(regex);
-      m = p.matcher(str);
-      str = m.replaceAll("");
+      String[] regexList = {
+        ".*Hex stream: ",
+        "\\[data .*\\n",
+        " ",
+        "\\n"
+      };
+      for(String regex : regexList){
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(str);
+        str = m.replaceAll("");
+      }
 
       return str;
     }
