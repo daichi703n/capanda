@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <div th:replace="fragments/header :: head">Header</div>
+  </head>
+<body>
+  <div th:replace="fragments/header :: header">Header</div>
+  <div th:class="container-fluid">
+    <span th:utext="${msg}" />
+    <div class="form">
+      <form action="login" method="POST">
+        <img src="https://icooon-mono.com/i/icon_10947/icon_109470.svg" width="64" height="64">
+        <input type="email" name="email" placeholder="Email" />
+        <input type="password" name="password" placeholder="Password" />
+        <input type = "submit">
+      </form>
+    
+    </div>
+  </div>
+  <div th:replace="fragments/footer :: footer">&copy; Footer</div>
+</body>
+</html>

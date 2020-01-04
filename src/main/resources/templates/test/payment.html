@@ -1,0 +1,153 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <div th:replace="fragments/header :: head">Header</div>
+
+    <!-- https://qiita.com/rochefort8/items/623f4b14e67932ae98cf -->
+
+    <!-- jquery/Bootstrap/Stripe -->
+    <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script> -->
+    <!-- <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script> -->
+
+    <!--- Stylesheets -->
+    <!-- <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" type="text/css"> -->
+
+    <style type="text/css">
+      .StripeElement {
+      }
+      .StripeElement--focus {
+          border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+    }
+    .StripeElement--invalid {
+    }
+    .StripeElement--complete {
+    }
+    .StripeElement--webkit-autofill {
+    }
+    </style>
+
+  </head>
+
+<body>
+  <div th:replace="fragments/header :: header">Header</div>
+  <div th:class="container-fluid">
+    <span th:utext="${msg}" />
+
+    <div class="container">
+
+<form class="form-horizontal" role="form" id="payment-form" action="payment" method="POST">
+
+<h2>
+  <img src="https://icooon-mono.com/i/icon_10947/icon_109470.svg" width="64" height="64">
+  クレジットカード情報
+</h2>
+
+<section class="payment">
+
+  <div id="creditcard">
+    <div class="form-group card-number">
+      <!-- <label for="cc_number" class="col-sm-2 control-label">カード番号</label> -->
+      <div class="col-sm-6">
+        <input type="card-number" name="card-number" placeholder="カード番号" for="cc_number" id="card-number" class="form-control" />
+        <!-- <span id="card-number" class="form-control"> -->
+                <!-- Stripe Card Element -->
+        <!-- </span> -->
+      </div>
+    </div>
+
+    <div class="form-group card-exp">
+      <!-- <label for="cc-exp" class="col-sm-2 control-label">有効期限</label> -->
+      <div class="col-sm-3">
+        <input type="card-exp" name="card-exp" placeholder="有効期限" for="cc-exp" id="card-exp" class="form-control" />
+        <!-- <span id="card-exp" class="form-control"> -->
+          <!-- Stripe Card Expiry Element -->
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group card-cvc">
+      <!-- <label for="card-cvc" class="col-sm-2 control-label">セキュリティコード</label> -->
+      <div class="col-sm-3">
+        <input type="card-cvc" name="card-cvc" placeholder="セキュリティコード" for="card-cvc" id="card-cvc" class="form-control" />
+        <!-- <span id="card-cvc" class="form-control"> -->
+        <!-- Stripe CVC Element -->
+        </span>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<hr>
+
+<nav class="col-sm-10" role="navigation">
+<input type="submit" id="payment-submit" class="btn btn-primary btn-lg btn-block">
+<!-- <button type="submit" id="payment-submit" class="btn btn-primary btn-lg btn-block"><span class="glyphicon glyphicon-chevron-right"></span>支払う</button> -->
+</nav>
+
+</form>
+
+</div> <!-- container -->
+
+<!-- Stripe --->
+<script src="https://js.stripe.com/v3/"></script>
+<script type="text/javascript">
+	'use strict';
+	// Create a Stripe client
+        var stripe = Stripe('pk_test_K3rm5fd3O845Y425biVp6d9D');
+        // Create an instance of Elements
+        var elements = stripe.elements();
+        // Try to match bootstrap styling
+        var style = {
+            base: {
+                'lineHeight': '1.35',
+                'fontSize': '1.11rem',
+                'color': '#495057',
+                'fontFamily': 'apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif'
+            }
+        };
+	// Card number
+        var card = elements.create('cardNumber', {
+            'placeholder': '',
+            'style': style
+        });
+	card.mount('#card-number');	
+	
+        // CVC
+        var cvc = elements.create('cardCvc', {
+            'placeholder': 'XXX',
+            'style': style
+        });
+        cvc.mount('#card-cvc');
+	// Card expiry
+        var exp = elements.create('cardExpiry', {
+            'placeholder': 'MM / YY',
+            'style': style
+        });
+        exp.mount('#card-exp');
+        // Handle form submission.
+        $('#payment-form').submit(function(event){
+	        event.preventDefault();
+		var cardData = {
+                };
+		stripe.createToken(card, cardData).then(function(result) {
+		    console.log(result);
+		    if(result.error && result.error.message){
+                        alert(result.error.message);
+	            }else{
+        	        // alert(result.token.id);
+                    }
+		});
+        });
+	
+</script>
+
+
+    </div>
+  </div>
+  <div th:replace="fragments/footer :: footer">&copy; Footer</div>
+</body>
+</html>

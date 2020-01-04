@@ -5,6 +5,7 @@ import java.util.Objects;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
@@ -38,6 +39,28 @@ public class CapandaController {
         }
         model.addAttribute("msg",readmeStr);
         return "index";
+    }
+
+    @RequestMapping(path = "test/login", method = RequestMethod.GET)
+    public String testLoginGet(Model model) {
+        return "test/login";
+    }
+
+    @RequestMapping(path = "test/login", method = RequestMethod.POST)
+    public String testLoginPost(Model model, @RequestBody String body) {
+        model.addAttribute("msg",body);
+        return "test/login";
+    }
+
+    @RequestMapping(path = "test/payment", method = RequestMethod.GET)
+    public String testPaymentGet(Model model) {
+        return "test/payment";
+    }
+
+    @RequestMapping(path = "test/payment", method = RequestMethod.POST)
+    public String testPaymentPost(Model model, @RequestBody String body) {
+        model.addAttribute("msg",body);
+        return "test/payment";
     }
 
 }

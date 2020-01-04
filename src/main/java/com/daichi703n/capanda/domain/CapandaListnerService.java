@@ -72,15 +72,19 @@ public class CapandaListnerService {
                                 // .getClass()
                                 .toString();
                                 // .toHexString();
-                        log.info("tmp: "+result);
-                        log.info("flatten: "+flattenPayload(result));
+                        // log.info("tmp: "+result);
+                        // log.info("flatten: "+flattenPayload(result));
 
                         result = hexToAscii(flattenPayload(result));
+                        log.info(result);
+                        // log.info("---search---");
+                        String searchedPayload = searchPayload(result);
+                        if (searchedPayload != ""){
+                            log.info(searchedPayload);
+                        }
                     } catch (final NullPointerException e){
-                        result = "No Payload";
+                        log.info("No Payload");
                     }
-                    log.info(result);
-                    // log.info(new String(tcpPacket.getPayload().toString()), "UTF-8");
 
                     // }
                 }else{
@@ -132,6 +136,33 @@ public class CapandaListnerService {
         }
 
         return str;
+    }
+
+    private static String searchPayload(String str){
+        String[] removeRegexList = {
+            "^GET",
+        };
+        for(String regex : removeRegexList){
+            Pattern p = Pattern.compile(regex);
+            Matcher m = p.matcher(str);
+            str = m.replaceAll("");
+        }
+
+        String result = "";
+        int matchCount = 0;
+        String[] regexList = {
+            "password",
+            "\\d{16}",
+        };
+        for(String regex : regexList){
+            Pattern p = Pattern.compile(regex);
+            Matcher m = p.matcher(str);
+            if (m.find()) {matchCount++;}
+        }
+        if (matchCount != 0){
+            result = result + str;
+        }
+        return result;
     }
 
 }
