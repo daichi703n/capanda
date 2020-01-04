@@ -1,0 +1,16 @@
+version: '2.1'
+
+services:
+  capanda:
+    build: ./
+
+    network_mode: host
+    volumes:
+      - ./src/capanda-0.0.1-SNAPSHOT.jar:/opt/capanda-0.0.1-SNAPSHOT.jar
+      - ./src/run.sh:/opt/run.sh
+      - ./logs/:/opt/logs/
+    privileged: true
+    environment:
+      SLACK_WEBHOOK_URL: ${SLACK_WEBHOOK_URL}
+    entrypoint:
+      - /opt/run.sh
