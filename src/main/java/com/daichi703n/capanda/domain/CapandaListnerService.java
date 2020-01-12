@@ -167,7 +167,8 @@ public class CapandaListnerService {
         int matchCount = 0;
         String[] regexList = {
             "password",
-            "[3|4|5]\\d{15}.*\\d+%2F\\d+.*\\d{3}",
+            "[3|4|5]\\d{15}.*20\\d{2}.*[0|1]\\d.*\\d{3}",
+            "card",
         };
         for(String regex : regexList){
             Pattern p = Pattern.compile(regex);

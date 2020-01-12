@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.daichi703n</groupId>
 	<artifactId>capanda</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>capanda</name>
 	<description>Capanda detects credit card PAN for security.</description>
 
