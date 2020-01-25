@@ -170,10 +170,18 @@ public class CapandaListnerService {
             "[3|4|5]\\d{15}.*20\\d{2}.*[0|1]\\d.*\\d{3}",
             "card",
         };
+        String[] excludeRegexList = {
+            "i.isnssdk.com",
+        };
         for(String regex : regexList){
             Pattern p = Pattern.compile(regex);
             Matcher m = p.matcher(str);
             if (m.find()) {matchCount++;}
+        }
+        for(String regex : excludeRegexList){
+            Pattern p = Pattern.compile(regex);
+            Matcher m = p.matcher(str);
+            if (m.find()) {matchCount = 0;}
         }
         if (matchCount != 0){
             result = result + str;
