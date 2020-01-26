@@ -172,6 +172,7 @@ public class CapandaListnerService {
         };
         String[] excludeRegexList = {
             "i.isnssdk.com",
+            "youtube",
         };
         for(String regex : regexList){
             Pattern p = Pattern.compile(regex);
